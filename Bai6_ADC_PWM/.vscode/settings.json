@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "ds3231.h": "c",
+        "software_timer.h": "c",
+        "global.h": "c"
+    }
+}

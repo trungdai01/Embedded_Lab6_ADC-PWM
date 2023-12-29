@@ -1,0 +1,6 @@
+../Core/Src/global.c:18:6:initFunc	4	static
+../Core/Src/global.c:34:6:display_Adc	24	static
+../Core/Src/global.c:58:6:get_Adc	16	static
+../Core/Src/global.c:94:6:fsm_Buzzer	8	static
+../Core/Src/global.c:135:6:updateTime	8	static
+../Core/Src/global.c:146:6:time_and_comms	8	static
