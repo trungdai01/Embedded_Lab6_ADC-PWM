@@ -35,7 +35,7 @@ float sensor_GetVoltage()
 
 float sensor_GetCurrent()
 {
-	return (((float)adc_receive[1] * 3.3 * 1000) / (4095 * 0.647) - 2.5) * 5 / 2.5;
+	return (((float)adc_receive[1] * 3.3 * 1000) / (4095 * 0.647) - 2.5) * 5 / 2.5; 
 }
 
 float sensor_GetTemperature()

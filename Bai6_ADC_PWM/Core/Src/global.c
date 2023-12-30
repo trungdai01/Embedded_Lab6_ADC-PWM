@@ -16,12 +16,12 @@ uint8_t status_buzzer = 0;
 
 void initFunc()
 {
-    get_Voltage = 0.0;
-    get_Temperature = 0.0;
-    get_Light = 0.0;
-    get_Current = 0.0;
-    get_Power = 0.0;
-    get_Humid = 0.0;
+    get_Voltage = 0;
+    get_Temperature = 0;
+    get_Light = 0;
+    get_Current = 0;
+    get_Power = 0;
+    get_Humid = 0;
     get_Potentiometer = 0;
     count_adc = 0;
     count_buzzer = 0;
@@ -40,10 +40,10 @@ void display_Adc()
     lcd_ShowStr(10, 160, "Light:", RED, BLACK, 16, 0);
     if (get_Light > 3500)
     {
-        lcd_ShowStr(30, 160, "STRONG", RED, BLACK, 16, 0);
+        lcd_ShowStr(140, 160, "STRONG", RED, BLACK, 16, 0);
     }
     else
-        lcd_ShowStr(30, 160, "WEAK", RED, BLACK, 16, 0);
+        lcd_ShowStr(140, 160, "WEAK", RED, BLACK, 16, 0);
     // lcd_ShowIntNum(130, 160, get_Light, 4, RED, BLACK, 16);
     lcd_ShowStr(10, 180, "Potentiometer:", RED, BLACK, 16, 0);
     lcd_ShowFloatNum(130, 180, get_Potentiometer, 5, RED, BLACK, 16);
@@ -51,6 +51,7 @@ void display_Adc()
     lcd_ShowFloatNum(130, 200, get_Humid, 5, RED, BLACK, 16);
     lcd_ShowStr(10, 220, "Temperature:", RED, BLACK, 16, 0);
     lcd_ShowFloatNum(130, 220, get_Temperature, 4, RED, BLACK, 16);
+    // lcd_ShowIntNum(10, 240, ds3231_sec, RED, BLACK, 16, 0);
 }
 
 void get_Adc()
@@ -66,7 +67,6 @@ void get_Adc()
         get_Temperature = sensor_GetTemperature();
         get_Power = get_Voltage * (get_Current / 1000.0);
         get_Humid = ((float)get_Potentiometer / 4095.0) * 100;
-        display_Adc();
         uart_Rs232SendString("Power: ");
         uart_Rs232SendNum(get_Power);
         uart_Rs232SendString("\n");
@@ -78,9 +78,6 @@ void get_Adc()
         else
             uart_Rs232SendString("WEAK");
         uart_Rs232SendString("\n");
-        uart_Rs232SendString("Power: ");
-        uart_Rs232SendNum(get_Power);
-        uart_Rs232SendString("\n");
         uart_Rs232SendString("Temperature: ");
         uart_Rs232SendNum(get_Temperature);
         uart_Rs232SendString("\n");
@@ -88,6 +85,7 @@ void get_Adc()
         uart_Rs232SendNum(get_Humid);
         uart_Rs232SendString("\n");
     }
+    display_Adc();
 }
 
 void fsm_Buzzer()
@@ -138,16 +136,16 @@ void updateTime()
     ds3231_Write(ADDRESS_DATE, 20);
     ds3231_Write(ADDRESS_DAY, 6);
     ds3231_Write(ADDRESS_HOUR, 20);
-    ds3231_Write(ADDRESS_MIN, 11);
-    ds3231_Write(ADDRESS_SEC, 23);
+    ds3231_Write(ADDRESS_MIN, 0);
+    ds3231_Write(ADDRESS_SEC, 0);
 }
 
 void time_and_comms()
 {
     ds3231_ReadTime();
-    led7_SetDigit(ds3231_hours / 10, 0, 0);
-    led7_SetDigit(ds3231_hours % 10, 1, 0);
-    led7_SetDigit(ds3231_min / 10, 2, 0);
-    led7_SetDigit(ds3231_min % 10, 3, 0);
-    led7_Scan();
+    led7_SetDigit(ds3231_min / 10, 0, 0);
+    led7_SetDigit(ds3231_min % 10, 1, 0);
+    led7_SetDigit(ds3231_sec / 10, 2, 0);
+    led7_SetDigit(ds3231_sec % 10, 3, 0);
+    // led7_Scan();
 }

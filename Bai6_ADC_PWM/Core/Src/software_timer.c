@@ -33,7 +33,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 				timer2_counter = timer2_MUL;
 			}
 		}
-		// led7_Scan();
+		led7_Scan();
 	}
 }
 
